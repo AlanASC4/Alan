@@ -53,7 +53,7 @@ function randBlock(){
 
 
 
-function setup() {
+/*function setup() {
   createCanvas(windowWidth, windowHeight);
   background (25);
 }
@@ -177,4 +177,22 @@ function draw() {
     //textAlign(CENTER);
     //fill(255);
     //text("Place your ships!", width/2, 440);
+}
+*/
+
+var xloc = 25;
+var yloc = 25;
+var lsize = 30;
+function draw(){
+    
+   fill("White");  //generating squares/rects
+    var p2html = []; //coil = row, coil2 = column
+    for (coil = 0; coil < 10; coil ++){
+        for (coil2 = 0; coil2 < 10; coil2++){
+            p2html.push(rect(xloc + lsize*(coil), yloc + lsize* (coil2 ), lsize, lsize));
+        }
+    }
+
+   
+   
 }
