@@ -4,9 +4,9 @@
 $.ajax({
   url: 'https://randomuser.me/api/',
   dataType: 'json',
-  url: 'https://restcountries.eu/rest/v2/alpha?codes=nl',
   success: function(data) {
       //capitalize first letter
+
         function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);    
         }
@@ -26,6 +26,7 @@ $.ajax({
         var personState = capitalizeFirstLetter(person.location.state);
         var personPicture = person.picture.large;
         var personCountry = person.nat;
+        
         //gender check
         function checkGender(){
             if (personGender == male)
@@ -38,9 +39,21 @@ $.ajax({
         checkGender();
         $("body").append("<h1>This is " + personTitle + ". " + personFirstName + 
         " " + personLastName + ", " + posessPronoun + " gender is " + personGender +". " + 
-        personFirstName + " lives in " + personCity + ", " + personState + 
-        ". Her country of origin is " + personCountry + ". This is what " + pronoun + " looks like: " + " </h1>");
+        personFirstName + " lives in " + personCity + ", " + personState + ". This is what " + pronoun + " looks like: " + " </h1>");
         $("body").append("<img src =  ' " + personPicture + " ' >");
+$.ajax({
+    url: 'https://restcountries.eu/rest/v2/all/',
+    dataType: 'json',
+    success: function(data){
+        for(i=0; i<data.length; i++){
+            if (personCountry == data[i].alpha2Code){
+                $('body').append("<h2>" + capitalizeFirstLetter(pronoun) + " oiginates from " + data[i].name + ". <h2>");
+                break
+            }
+        }
+    }
+})
+
   }
 });
       
