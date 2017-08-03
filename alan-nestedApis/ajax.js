@@ -48,6 +48,8 @@ $.ajax({
         for(i=0; i<data.length; i++){
             if (personCountry == data[i].alpha2Code){
                 $('body').append("<h2>" + capitalizeFirstLetter(pronoun) + " oiginates from " + data[i].name + ". <h2>");
+                $('body').append("<h3>/Gotcha</h3>");
+                $("body").append("<img src = ' " + "http://www.anaussieinitaly.com/wp-content/uploads/2015/05/Hand-gesture.jpg" + " ' >");
                 break
             }
         }
