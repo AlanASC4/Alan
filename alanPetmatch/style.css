@@ -1,0 +1,12 @@
+body {
+    background-image: url("http://www.themesrefinery.net/wp-content/uploads/2014/06/Elegant_Background-19.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
+    color: lightpink;
+    text-shadow: 2px 0 0 black, -2px 0 0 black, 0 2px 0 black, 0 -2px 0 black, 1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;
+}
+
+input {
+    padding: 10px 30px;
+}

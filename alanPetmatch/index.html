@@ -2,29 +2,65 @@
 
 <html>
     <head>
-        <script src="http://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+         <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PetMatch</title>
 
-        <link src= "app.js">
+        <!--Reference platform.js library here-->
+   
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <!--Reference Client ID in meta tag here-->
+        <meta name="google-signin-client_id" content="657696259663-o4tp7e0i9k5n8fjfj89j7ft762s7vrl1.apps.googleusercontent.com">
+
+        <!--jquery-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <!--custom files-->
+        <script src="app.js"></script>
+        <link rel="stylesheet" href="style.css">    
+
     </head>
     <body>
+        <div class="signs">
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            <a href="#" class="signOut" onclick="onSignOut();">Sign out</a>
+        </div>
+        <div class ="mainContainer">
+        <header>
+            <h1>WELCOME <span class="userName">USER_NAME</span></h1>    
+        </header>
+        
+        <section>
+            <!--picture-->
+            <div class = "userImg">
+                <img src="assets/placeholder.png">
+            </div>
 
+            <!--User Data-->
+            <div class="userData">
+                <h2>E-MAIL:</h2>
+                <p class="email">example@example.com</p>
+            </div>
+        </section>
 
-        <h1>Pet MATCH</h1>
+        <h3>Pet MATCH</h3>
         <form id="myform" >
-            <h2>Rate from 1-5 </h2>
+            <h4>Determine which pet is best for you!</h4>
             <p>What's your willing to spend on a pet?</p>
-            <input type="number" id="number" onchange="save();"> 
+            <input type="number" placeholder="1-5" id="number" onchange="save();"> 
             <p>How spacious is your home?</p>
-            <input type="number" id="number" onchange="save();">
+            <input type="number" placeholder="1-5" id="number" onchange="save();">
             <p>How many kids do you have </p>
-            <input type="number" id="number" onchange="save();">
+            <input type="number" placeholder="1-5" id="number" onchange="save();">
             <p>Do you have allergies</p>
-            <input type="number" id="number" onchange="save();">
+            <input type="number" placeholder="1-5" id="number" onchange="save();">
             <p></p>
             <input type="submit">
 
 
     
         </form>
+        </div>
     </body>
 </html>
