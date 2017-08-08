@@ -1,0 +1,35 @@
+body{
+    background-image: url("http://i.imgur.com/9od0mSo.jpg");
+    background-size: cover;
+    text-align: center;
+}
+h1{
+    color: white;
+    font-family: "Arial", Times, Serif;
+    font-style: bold;
+    font-size: 40px;
+}
+.textContainer{
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    color:white;
+}
+.Player
+{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 300px;
+    border: 3px solid #73AD21 ;
+}
+
+.CPU
+{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 300px;
+    border: 3px solid #73AD21 ;
+
+}

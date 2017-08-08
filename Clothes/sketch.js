@@ -12,6 +12,8 @@ function onSignIn(googleUser) {
 
 //called when "sign out" button clicked
 function onSignOut() {
+    console.log(gapi.auth2);
+    gapi.auth2.init();
     //should sign user out and toggleHidden
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
@@ -22,5 +24,20 @@ function onSignOut() {
         $(".email").text("example@example.com");
         
     });
-    window.location.href = "index.html";
 }
+
+  var images = [ 'http://lorempixel.com/400/200/sports/1', 'http://lorempixel.com/400/200/sports/2','http://lorempixel.com/400/200/sports/3','http://lorempixel.com/400/200/sports/4' ];
+    var index = 0;
+
+    function buildImage() {
+      var img = document.createElement('img')
+      img.src = images[index];
+      document.getElementById('content').appendChild(img);
+    }
+
+    function changeImage(){
+      var img = document.getElementById('content').getElementsByTagName('img')[0]
+      index++;
+      index = index % 4; // This is for if this is the last image then goto first image I have 4 images so I've given 4 change accordingly 
+      img.src = images[index];
+    }

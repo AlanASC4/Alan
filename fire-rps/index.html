@@ -5,50 +5,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-   <title>RPS Game</title>
+  <title>RPS Game</title>
 
-   <!--jquery-->
+  <!--Go to https://console.firebase.google.com-->
+    <!--Sign in and add a project "fireMessage"-->
+    <!--PASTE SNIPPET HERE-->
+        
+       
+<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBk9CgKpqmk8oB_QRRfBertfszacepDvhk",
+    authDomain: "rps-project-5b676.firebaseapp.com",
+    databaseURL: "https://rps-project-5b676.firebaseio.com",
+    projectId: "rps-project-5b676",
+    storageBucket: "",
+    messagingSenderId: "827431625182"
+  };
+  firebase.initializeApp(config);
+
+</script>
+
+  <!--jquery-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-   <!--google fonts-->
+  <!--google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Alike+Angular|Asul|Eczar" rel="stylesheet">
 
-   <!--custom files-->
+  <!--custom files-->
     <script src="main.js"></script>
     <link rel="stylesheet" href="style.css">
 
 </head>
 <body>
 
-   <!--Add your name-->
-    <h1>Play this shit Homie</h1>
+  <!--Add your name-->
+    <h1>Play this Homie</h1>
 
-   <!--Will be populated with messages-->
+  <!--Will be populated with messages-->
     <div class="allMessages">
         
-   </div>
+  </div>
     
-   <form action="" method="get">
-<button name="rock">Rock</button>
-<button name="rock">Paper</button>
-<button name="rock">Scissors</button>
+  <form action="" method="get">
+
+<!-- <input type="button" onclick="updateDB();" value="Submit/Update"> -->
+
 </form>
 
-   <!--For user to input messages-->
+  <!--For user to input messages-->
     <div class="userContainer">
         <form>
             <div class="textContainer">
                 <div>
                     <p>Your Initials:</p><input id="name" type="text">
                 </div>
+                <div class = "Player">
+                    <p> Player Score</p>
+                </div>
+                <div class = "CPU">
+                    <p>Choice(r,p,s):</p>
+                    </div>
                 <div>
-                    <p>Choice(r,p,s):</p><input id="message" type="text">
+                    <p>Choice(r,p,s):</p>
+                    <input type="button" onclick="getCpu();" value="get Cpu Choice">
+                    <input type="button" onclick="setChoice('rock');" value="Rock">
+                    <input type="button" onclick="setChoice('paper');" value="Paper">
+                    <input type="button" onclick="setChoice('scissors');" value="Scissors">
+                    <input type="button" onclick="playRps();" value="Shoot"> 
+                                     
                 </div>
             </div>
             <div class="GObutton">
-                <input type="reset" onclick="updateDB();" value="Submit/Update">
+                <!-- <input type="reset" onclick="updateDB();" value="Submit/Update">    -->
             </div>
         </form>
     </div>
+    
 </body>
 </html>
