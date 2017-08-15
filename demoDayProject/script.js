@@ -184,6 +184,7 @@ database.on("child_added", function(rowData){
 });
 
 
+
 function initMap() {
 var map = new google.maps.Map(document.getElementById('map'), {
   zoom: 6,
@@ -191,21 +192,14 @@ var map = new google.maps.Map(document.getElementById('map'), {
   mapTypeId: google.maps.MapTypeId.ROADMAP
 
 });
-var iconBase = 'C:\Users\ASC Guest\Desktop\img';
-        var icons = {
-          yourPing: {
-            icon: iconBase + 'transparentPing.png'
-          }
-        };
 
 var infowindow = new google.maps.InfoWindow();
 var marker;
 for (var i = 0; i < locations.length; i++) {  
   marker = new google.maps.Marker({
     draggable: true,
-    position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+    position: new google.maps.LatLng(locations[i].Lat, locations[i].Long),
     map: map, 
-    icon: icons.yourPing.icon,
 
   });
   google.maps.event.addListener(marker, 'click', (function(marker, i) {
@@ -215,8 +209,9 @@ for (var i = 0; i < locations.length; i++) {
 
 
       infowindow.setContent('<div contentEditable="true" ' +
-                                   'style="height: 100px;">' +
-                                   'Title: '+ locations[i][0] +'<br>' + 'Description:</div>');
+                                   'style="height: 100px; color: black;">' +
+                                   'Title: '+ locations[i].Title +'<br>' + 'Description:' + locations[i].Desc +'</div>');
+                                   console.log(locations[i].Title)
       
     }
   })(marker, i), function() {
@@ -319,10 +314,11 @@ function addMarker1(data){
 //         desc = newdesc;}
 
 var randTitle = ["suhbcsc","uhjnb","cnjevevw","lokvei","meuhwbw"]
-locations.push([randTitle[Math.round(Math.random()* randTitle.length)], Math.random() * 10 + 30, Math.random() * 10 - 100, increment, "desc"]);
-console.log("alan's fat booty", refping);
 
-refping.push(locations[increment]);
+locations.push({Title: $('#title').val(), Lat: Math.random() * 10 + 30, Long: Math.random() * 10 - 100,Desc: $("#desc").val()});
+
+refping.push({Title: locations[increment].Title, Lat: locations[increment].Lat, Long: locations[increment].Long, Desc: locations[increment].Desc} );
+
 initMap();
 increment++;
 console.log(locations)
@@ -386,6 +382,7 @@ function gotData(data){
 
 //Golbal locations
 var glocations = [];
+function getglobalData(){
 database.on("child_added", function(rowData){
     
    var users = rowData.val();
@@ -396,7 +393,7 @@ database.on("child_added", function(rowData){
         prevalues.push(users[keys[k]].ping)
     }
     console.log('pre',prevalues);
-    var values = [];
+
     for (p = 0; p < prevalues.length; p++){
         // console.log('inbtw', prevalues[p]);
         if (prevalues[p] == undefined){}
@@ -409,6 +406,7 @@ database.on("child_added", function(rowData){
     }
     console.log('global locations',glocations);
 });
+}
 
 //adds all pings to Map
 function globalUpdate(){
@@ -426,7 +424,7 @@ function global(data) {
     for (var i = 0; i < glocations.length; i++) {  
         marker = new google.maps.Marker({
         draggable: true,
-        position: new google.maps.LatLng(glocations[i][1], glocations[i][2]),
+        position: new google.maps.LatLng(glocations[i].Lat, glocations[i].Long),
         map: map, 
     });
     google.maps.event.addListener(marker, 'click', (function(marker, i) {
@@ -434,8 +432,9 @@ function global(data) {
         infowindow.open(map, marker);
         infowindow.setContent('<div contentEditable="true" ' +
                                     'style="height: 100px;">' +
-                                    'Title: '+ title +'<br>' + 'Description:'+ desc +'</div>');
-        
+                                    'Title:' + glocations[i].Title+'<br>' + 'Description:' +glocations[i].Desc +'</div>');
+                console.log(glocations[i][0]);
+
         }
     })(marker, i), function() {
             marker.openInfoWindowHtml();
@@ -444,7 +443,46 @@ function global(data) {
     }//console.log(marker);  
 }
 
+function addglobalMarker(){
+    ref.once('value', addglobalMarker1, errData);
+}
 
+function addglobalMarker1(data){
+
+  var user = firebase.auth().currentUser;
+    // console.log(user);
+    var email = user.email;
+    var specificKey;
+
+   var users = data.val();
+    var keys = Object.keys(users);
+
+   for (var i = 0; i < keys.length; i++){
+            var k = keys[i];
+            if( email == users[k].email){
+                specificKey = k;
+                }
+            }
+
+    var refping = firebase.database().ref('users/' + specificKey + '/ping');
+
+
+
+//   var newtitle = prompt("Please enter The title of your ping:", "ping title");
+//     if (newtitle != null) {
+//         title = newtitle;}
+//   var newdesc = prompt("Please enter a brief description of your ping:", "ping desc");
+//     if (newdesc != null) {
+//         desc = newdesc;}
+
+
+addMarker();
+
+getglobalData();
+globalUpdate();
+increment++;
+
+}
 
 
 
