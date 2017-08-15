@@ -2,6 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script
   src="http://code.jquery.com/jquery-3.2.1.js"
@@ -10,8 +15,6 @@
 
 
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
 <link rel="stylesheet" href="main.css">
 <script src="https://apis.google.com/js/platform.js" async defer></script>
         <!--Reference Client ID in meta tag here-->
@@ -37,22 +40,61 @@
  <script src="sketch.js"></script>
 
 </head>
-<body onload="buildImage();">
-    <div class="contents" id="content"></div>
-    <button onclick="changeImage()">NextImage</button>
-    
-<div class="dropdown">
-  <button class="dropbtn">Dropdown</button>
-  <div class="dropdown-content">
-    <a href="#">Link 1</a>
-    <a href="#">Link 2</a>
-    <a href="#">Link 3</a>
-  </div>
-</div>
-    <div class="signs">
-        
-        <a href="#" class="signOut" onclick="signOut();" style="color: red;">Sign out</a>
+<body >
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">ClothesMatch</a>
     </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">RandomFit</a></li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Dress<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Casual</a></li>
+          <li><a href="#">Proffesional</a></li>
+          <li><a href="#">Sportive</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Weather</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><div class="signs">
+        <a href="#" class="signOut" onclick="signOut();"  style="color: white; min-height: 10px; " >Sign out</a>
+      </div></li>
+
+    </ul>
+  </div>
+</nav>
+  
+  <div class = "RandomFit">
+    <h2> RandomFit Generator</h2>
+    <input type="button" onclick="randImage();" value="RandomFit">
+    </div>
+
+    <div class = "Dress">
+      <div id = "Casual">
+        <h2> Casual Fit Generator </h2>
+        <p>Here is A randomly generated Casual Outfit</p>
+        <input type="button" onclick="randCasual();" value="CasualFit">
+        </div>
+        <div id = "Professional">
+          <h2> Professional Fit Generator </h2>
+          <p>Here is A randomly generated Proffesional Outfit</p>
+          <input type="button" onclick="randProfessional();" value="ProfessionalFit">
+          </div>
+        <div id = "Sportive">
+          <h2> Sportive Fit Generator</h2>
+          <p>Here is A randomly generated Sportive Outfit</p>
+          <input type="button" onclick="randSport();" value="SportFit">
+          </div>
+    </div>
+
+    <div class = "Weather">
+      <h2> Weather </h2>
+      <img src = "http://dreamatico.com/data_images/weather/weather-7.jpg" style="width: 300px; height: 300px;";>
+      </div>
+
 
 </body>
 </html>

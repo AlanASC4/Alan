@@ -10,23 +10,23 @@ body,html
 
 
 h1{
-    color:white;
+    color:black;
     font-family: "Arial";
     margin:0;
 }
 
 h2{
-    color:white;
+    color:black;
     font-family:"Arial"
 }
 
 h3{
-    color:white;
+    color:  black;
     font-family:"Arial"
 }
 
 h4{
-    color:white;
+    color:black;
     font-family:"Arial"
 }
 /*body{
@@ -52,7 +52,6 @@ a{
   background-size: cover;
 margin:auto;
 }
-
 
 .secondDiv{
     width: 100%;
