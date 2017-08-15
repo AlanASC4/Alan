@@ -54,20 +54,28 @@
  <!--<script src="app.js"></script>-->
   </head>
   <body> 
-    
-
-
-         <div class="signs">
+    <div class="container">
+      <div class="signs">
         <div class="g-signin2" data-onsuccess="onSignIn2"></div>
-        <a href="#" class="signOut" onclick="onSignOut();">Sign out</a>
-        
+        <button href="#" class="btn btn-success" onclick="onSignOut();">Sign out</button>
+        <button type = "button" onclick="newUser()">If you're new add yourself</button>
     </div>
 
 
-      <button type="button" onclick="addMarker()">Add Marker!</button>
-    <h3>My Google Maps Demo</h3>
-    <div id="map"></div>
-    <button type = "button" onclick="newUser()">If you're new add yourself</button>
+      <button type="button" class="btn btn-danger" onclick="addMarker()">Add Marker!</button>
+    
+      <div class="jumbotron">
+        
+        <button type = "button" class="btn btn-warning btn-sm" onclick="globalUpdate()">Check what Others are Pinging!</button> 
+
+        <h3>My Google Maps Demo</h3>
+        <div id="map"></div>
+        
+
+        </div>
+      </div>
+
+         
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWuTYHWjbohOSfRZGuOBAzyU7Jj3PG_80&callback=initMap">
     </script>

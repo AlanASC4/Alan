@@ -1,21 +1,6 @@
 var database = firebase.database().ref();
 var ref = firebase.database().ref('users');
 
-
-function onSignUp(googleUser) {
-    console.log('User signed in!');
-    var profile = googleUser.getBasicProfile();
-    //change userName text, img source, & email text based on profile
-    $(".userName").text(profile.getName());
-    $("img").attr("src", profile.getImageUrl());
-    $(".email").text(profile.getEmail());
-   window.location.href = "position.html";
-    googleSignin();
-    newUser();
-
-}
-
-
 //called when successful user log in
 function onSignIn(googleUser) {
     console.log('User signed in!');
@@ -206,6 +191,13 @@ var map = new google.maps.Map(document.getElementById('map'), {
   mapTypeId: google.maps.MapTypeId.ROADMAP
 
 });
+var iconBase = 'C:\Users\ASC Guest\Desktop\img';
+        var icons = {
+          yourPing: {
+            icon: iconBase + 'transparentPing.png'
+          }
+        };
+
 var infowindow = new google.maps.InfoWindow();
 var marker;
 for (var i = 0; i < locations.length; i++) {  
@@ -213,6 +205,7 @@ for (var i = 0; i < locations.length; i++) {
     draggable: true,
     position: new google.maps.LatLng(locations[i][1], locations[i][2]),
     map: map, 
+    icon: icons.yourPing.icon,
 
   });
   google.maps.event.addListener(marker, 'click', (function(marker, i) {
@@ -391,8 +384,65 @@ function gotData(data){
     }
 }
 
+//Golbal locations
+var glocations = [];
+database.on("child_added", function(rowData){
+    
+   var users = rowData.val();
+    var keys = Object.keys(users);
+    console.log(keys)
+    var prevalues = [];
+    for (k = 0; k < keys.length; k++){
+        prevalues.push(users[keys[k]].ping)
+    }
+    console.log('pre',prevalues);
+    var values = [];
+    for (p = 0; p < prevalues.length; p++){
+        // console.log('inbtw', prevalues[p]);
+        if (prevalues[p] == undefined){}
+        else {
+        var push = Object.values(prevalues[p])
+        for (pu = 0; pu < push.length; pu++){
+            glocations.push(push[pu]);
+        }
+        }
+    }
+    console.log('global locations',glocations);
+});
 
-
+//adds all pings to Map
+function globalUpdate(){
+    ref.on('value', global, errData)
+}
+var glocations = []
+function global(data) {
+    var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 6,
+    center: new google.maps.LatLng(39.809860, -98.555183),
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+    var infowindow = new google.maps.InfoWindow();
+    var marker;
+    for (var i = 0; i < glocations.length; i++) {  
+        marker = new google.maps.Marker({
+        draggable: true,
+        position: new google.maps.LatLng(glocations[i][1], glocations[i][2]),
+        map: map, 
+    });
+    google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+        infowindow.open(map, marker);
+        infowindow.setContent('<div contentEditable="true" ' +
+                                    'style="height: 100px;">' +
+                                    'Title: '+ title +'<br>' + 'Description:'+ desc +'</div>');
+        
+        }
+    })(marker, i), function() {
+            marker.openInfoWindowHtml();
+        });
+    
+    }//console.log(marker);  
+}
 
 
 
