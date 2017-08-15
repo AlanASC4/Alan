@@ -431,7 +431,7 @@ function global(data) {
         return function() {
         infowindow.open(map, marker);
         infowindow.setContent('<div contentEditable="true" ' +
-                                    'style="height: 100px;">' +
+                                    'style="height: 100px; ccolor: red">' +
                                     'Title:' + glocations[i].Title+'<br>' + 'Description:' +glocations[i].Desc +'</div>');
                 console.log(glocations[i][0]);
 
