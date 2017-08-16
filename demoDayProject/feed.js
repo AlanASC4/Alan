@@ -69,7 +69,7 @@ function findName2(data){
                 }
             }
     var userData = users[specificKey];
-    // $(".container").append("<p>" + userData.name  +"</p>")
+    $(".container").append("<p>" + userData.name  +"</p>")
 }
 //finds recent pings and displays it 
 function findPing(){
@@ -92,7 +92,7 @@ function findPing2(data){
     var values = Object.keys(userData.ping);
     console.log('values',values);
     for (v = 0; v < values.length; v++){
-                $(".container").append("<div class='jumbotron'> <h2> Title:" + userData.ping[values[v]].Title  + 
+                $("#feed").append("<div class='jumbotron'> <h2> Title:" + userData.ping[values[v]].Title  + 
                 "</h2><br><p>Lat:" + userData.ping[values[v]].Lat  + "<br>Long:" + 
                 userData.ping[values[v]].Long +"<br>Desc:" + userData.ping[values[v]].Desc  
                 + "<br><hr><p>Pinged by: " + userData.name + "</p>");

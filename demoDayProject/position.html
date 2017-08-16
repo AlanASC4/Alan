@@ -54,10 +54,14 @@
   <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
  <script src="script.js"></script>
  <!--<script src="app.js"></script>-->
+ <script src="feed.js"></script>
+<!--<link rel="stylesheet" href="feed.css">-->
   </head>
   <body onload="getglobalData()"> 
-    <div class="container">
-      <div class="signs">
+    <div class="container-fluid">
+  <div class="row">
+  <div id="mapBox" class="col-md-8">.col-md-8
+    <div class="signs">
         <div class="g-signin2" data-onsuccess="onSignIn2"></div>
         <button href="#" class="btn btn-success" onclick="onSignOut();">Sign out</button>
         <button type = "button" onclick="newUser()">If you're new add yourself</button>
@@ -98,19 +102,34 @@
                     
                     <!--<div class="tagChoiceField"></div>-->
                 </div>
-            </div>
-        
-        <button type = "button" class="btn btn-warning btn-sm" onclick="getglobalData(), globalUpdate()">Check what Others are Pinging!</button> 
+               
+  </div> 
+  <button type = "button" class="btn btn-warning btn-sm" onclick="getglobalData(), globalUpdate()">Check what Others are Pinging!</button> 
         <button class="btn btn-warning btn-sm" onclick="addglobalMarker()">Add marker to global </button>
         
         <h3>My Google Maps Demo</h3>
         <div id="map"></div>
-        
+  </div>
+  </div> 
+   <div id="feed" class="well col-md-4">
+<h1>Feed Box</h1>
+<div class="signs">
+            <div class="g-signin2" data-onsuccess="onSignIn2()">Sign In</div>
+            <button href="#" class="btn btn-danger btn-md" onclick="onSignOut();">Sign out</a></div>
+           
 
-        </div>
-      </div>
+        <button class="btn btn-danger" onclick="window.location.href='position.html'">Map</button>
+        <button onclick="displayInfo()">Master</button>
+        <button onclick="findName()">What's your name?</button>
+        <button onclick="findPing()">What have you pinged</button>
+        <button onclick="pop()">Userkey</button>
 
-         </div>
+   </div>
+
+  </div>
+  
+</div>
+  
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWuTYHWjbohOSfRZGuOBAzyU7Jj3PG_80&callback=initMap">
     </script>
