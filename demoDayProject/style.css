@@ -7,6 +7,7 @@
 .jumbotron{
     color: white;
     background-color: blueviolet;
+    width: 100%;
 }
 .pingActivity {
     border-style: solid;
