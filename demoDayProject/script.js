@@ -253,34 +253,6 @@ function ping1(data){
 }
 
 
-database.on("child_added", function(rowData){
-    var user = firebase.auth().currentUser;
-    var email = user.email;
-    var specificKey;
-
-   var users = rowData.val();
-    var keys = Object.keys(users);
-
-   for (var i = 0; i < keys.length; i++){
-            var k = keys[i];
-            if( email == users[k].email){
-                specificKey = k;
-                }
-            }
-    console.log('this',specificKey);
-    // alert(1);
-    // var row = rowData.val();
-    // var name = row.NAME;
-    // var message = row.MESSAGE;
-
-    // var fullText = "<p>" + name + " : " + message + "</p>";
-    // $(".allMessages").append(fullText);
-    console.log(rowData);
-    console.log(rowData.val());
-    console.log(rowData.val()[specificKey].ping);
-
-});
-
 function addMarker(){
     ref.once('value', addMarker1, errData);
 }
@@ -306,18 +278,14 @@ function addMarker1(data){
 
 
 
-//   var newtitle = prompt("Please enter The title of your ping:", "ping title");
-//     if (newtitle != null) {
-//         title = newtitle;}
-//   var newdesc = prompt("Please enter a brief description of your ping:", "ping desc");
-//     if (newdesc != null) {
-//         desc = newdesc;}
-
-var randTitle = ["suhbcsc","uhjnb","cnjevevw","lokvei","meuhwbw"]
-
 locations.push({Title: $('#title').val(), Lat: Math.random() * 10 + 30, Long: Math.random() * 10 - 100,Desc: $("#desc").val()});
 
-refping.push({Title: locations[increment].Title, Lat: locations[increment].Lat, Long: locations[increment].Long, Desc: locations[increment].Desc} );
+refping.push(
+    {Title: locations[increment].Title,
+         Lat: locations[increment].Lat,
+          Long: locations[increment].Long,
+           Desc: locations[increment].Desc} );
+
 
 initMap();
 increment++;
@@ -423,7 +391,7 @@ function global(data) {
     var marker;
     for (var i = 0; i < glocations.length; i++) {  
         marker = new google.maps.Marker({
-        draggable: true,
+        draggable: false,
         position: new google.maps.LatLng(glocations[i].Lat, glocations[i].Long),
         map: map, 
     });
@@ -468,12 +436,7 @@ function addglobalMarker1(data){
 
 
 
-//   var newtitle = prompt("Please enter The title of your ping:", "ping title");
-//     if (newtitle != null) {
-//         title = newtitle;}
-//   var newdesc = prompt("Please enter a brief description of your ping:", "ping desc");
-//     if (newdesc != null) {
-//         desc = newdesc;}
+
 
 
 addMarker();

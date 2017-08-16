@@ -60,7 +60,7 @@
   <body onload="getglobalData()"> 
     <div class="container-fluid">
   <div class="row">
-  <div id="mapBox" class="col-md-8">.col-md-8
+  <div id="mapBox" class="col-md-8">
     <div class="signs">
         <div class="g-signin2" data-onsuccess="onSignIn2"></div>
         <button href="#" class="btn btn-success" onclick="onSignOut();">Sign out</button>
@@ -68,14 +68,20 @@
     </div>
 
 
-      <button type="button" class="btn btn-danger" onclick="addMarker()">Add Marker!</button>
-      <button type="button" class="btn btn-danger" onclick="window.location.href='feed.html'">Feed</button>
+      <!--<button type="button" class="btn btn-danger" onclick="addMarker()">Add Marker!</button>-->
     
       <div class="jumbotron">
-        <button id="filterTag" onclick="showFilter('popUpFilter')">Pop Up</button>
+        <button id="filterTag" class="btn btn-warning btn-sm" onclick="showFilter('popUpFilter')">Pop Up</button>
 
         <p id="response"></p>
 
+        
+   
+  <button type = "button" class="btn btn-warning btn-sm" onclick="getglobalData(), globalUpdate()">Check what Others are Pinging!</button> 
+        <!--<button class="btn btn-warning btn-sm" onclick="addglobalMarker()">Add marker to global </button>-->
+        
+        <h3>My Google Maps Demo</h3>
+        <div id="map"></div>
         <div id="popUpFilter" class="popUpPosition" hidden>
             <div id="popUpWrapper">
                 <div id="popUpContainer">
@@ -91,9 +97,8 @@
                     <input id="desc" type="text" class="form-control" placeholder="Ping Description">
                     <span class="input-group-btn">
 
-
                     </div><br>
-
+                    <button class="btn btn-danger" onclick="showFilter('popUpFilter')">Cancel</button>
                     <button class="btn btn-danger" onclick="addMarker()">Submit</button>
                     <button class="btn btn-danger" onclick="addglobalMarker()">Submit to Global</button>
 
@@ -102,23 +107,12 @@
                     
                     <!--<div class="tagChoiceField"></div>-->
                 </div>
-               
-  </div> 
-  <button type = "button" class="btn btn-warning btn-sm" onclick="getglobalData(), globalUpdate()">Check what Others are Pinging!</button> 
-        <button class="btn btn-warning btn-sm" onclick="addglobalMarker()">Add marker to global </button>
-        
-        <h3>My Google Maps Demo</h3>
-        <div id="map"></div>
+               </div>
   </div>
   </div> 
    <div id="feed" class="well col-md-4">
 <h1>Feed Box</h1>
-<div class="signs">
-            <div class="g-signin2" data-onsuccess="onSignIn2()">Sign In</div>
-            <button href="#" class="btn btn-danger btn-md" onclick="onSignOut();">Sign out</a></div>
-           
 
-        <button class="btn btn-danger" onclick="window.location.href='position.html'">Map</button>
         <button onclick="displayInfo()">Master</button>
         <button onclick="findName()">What's your name?</button>
         <button onclick="findPing()">What have you pinged</button>
