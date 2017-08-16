@@ -1,126 +1,32 @@
 var database = firebase.database().ref();
 var ref = firebase.database().ref('users');
-
-//called when successful user log in
-function onSignIn(googleUser) {
-    console.log('User signed in!');
-    var profile = googleUser.getBasicProfile();
-    //change userName text, img source, & email text based on profile
-    $(".userName").text(profile.getName());
-    $("img").attr("src", profile.getImageUrl());
-    $(".email").text(profile.getEmail());
-   window.location.href = "position.html";
-    googleSignin();
-
-}
-
-function onSignIn2(googleUser) {
-    console.log('User signed in!');
-    var profile = googleUser.getBasicProfile();
-    //change userName text, img source, & email text based on profile
-    $(".userName").text(profile.getName());
-    $("img").attr("src", profile.getImageUrl());
-    $(".email").text(profile.getEmail());
-    googleSignin();
-    initMap()
-}
-
-//authenticates users?
-var provider = new firebase.auth.GoogleAuthProvider();
-
-function googleSignin() {
-   firebase.auth()
-  
-   .signInWithPopup(provider).then(function(result) {
-      var token = result.credential.accessToken;
-      var user = result.user;
-      var email = result.user.email;
-
-
-  }).catch(function(error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(error.code)
-      console.log(error.message)
-   });
-  
-
-}
-
-function googleSignout() {
-   firebase.auth().signOut()
-   .then(function() {
-      console.log('Signout Succesfull')
-   }, function(error) {
-      console.log('Signout Failed')  
-  });
+//makes the date buggy
+var time = new Date();
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+if(dd<10) {
+    dd = '0'+dd
 } 
-
-//called when "sign out" button clicked
-function onSignOut() {
-    console.log(gapi.auth2);
-    gapi.auth2.init();
-    //should sign user out and toggleHidden
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-        console.log('User signed out.')
-        //setting back to default
-        $(".userName").text("USER_NAME");
-        $("img").attr("src", "assets/placeholder.png");
-        $(".email").text("example@example.com");
-        window.location.href = "index.html";
-    });
-    googleSignout();
-}
-
-
-
+if(mm<10) {
+    mm = '0'+mm
+} 
+today = mm + '/' + dd + '/' + yyyy;
+// makes the date
 function errData(err){
     console.log('Error!');
     console.log(err);
 }
-
-
 //storing data into firebase and linking it to the current user via his/her email;
-
 //need a function that returns the users key in the database "KYIUEWJK@KJ"
     //that way any other function would iterate through the databse and when it finds a matching key will
         //do something (...)
-
-
-function button1(){
-    ref.once('value',keyData, errData);
-}
-
-function keyData(data){
-    //gets current user; also good stuff
-    var user = firebase.auth().currentUser;
-    var email = user.email;
-    var specificKey;
-
-   var users = data.val();
-    var keys = Object.keys(users);
-
-   for (var i = 0; i < keys.length; i++){
-            var k = keys[i];
-            if( email == users[k].email){
-                specificKey = k;
-                }
-            }
-    // $('.body').append("<p>" + specificKey + '</p>')
-    console.log(specificKey);
-
-}
-
-
-
-
 function searchPing() {
     var userSearch = document.getElementById("searchPing").value;
     var tag = document.getElementById("tagFilter").value;
     document.getElementById("response").innerHTML = "You searched for " + userSearch + " in " + tag;
 }
-
 function showFilter(id) {
     var e = document.getElementById(id);
     if (e.style.display == 'block')
@@ -128,8 +34,6 @@ function showFilter(id) {
     else
         e.style.display = 'block';
 }
-
-
 // function editMarker(){
 //   var newtitle = prompt("Please enter The title of your ping:", "ping title");
 //     if (newtitle != null) {
@@ -138,15 +42,8 @@ function showFilter(id) {
 //     if (newdesc != null) {
 //         desc = newdesc;}
 // }
-
 var locations = [];
 var increment = 0;
-
-
-
-
-
-
 database.on("child_added", function(rowData){
     var user = firebase.auth().currentUser;
     var email = user.email;
@@ -159,15 +56,6 @@ database.on("child_added", function(rowData){
                 specificKey = k;
                 }
             }
-    // console.log('this',specificKey);
-    // alert(1);
-    // var row = rowData.val();
-    // var name = row.NAME;
-    // var message = row.MESSAGE;
-    // var fullText = "<p>" + name + " : " + message + "</p>";
-    // $(".allMessages").append(fullText);
-    // console.log(rowData);
-    // console.log(rowData.val());
     if (rowData.val()[specificKey].ping == undefined){
         console.log('theres nothing you dummy');
     }
@@ -176,42 +64,42 @@ database.on("child_added", function(rowData){
         for (v = 0; v < values.length; v++){
             locations.push(values[v]);
         }
-        console.log('locations',locations);
-        console.log (rowData.val()[specificKey].ping);
+        // console.log('locations',locations);
+        // console.log (rowData.val()[specificKey].ping);
     }
     // console.log('p',locations);
     increment = locations.length;
 });
-
-
-
 function initMap() {
 var map = new google.maps.Map(document.getElementById('map'), {
   zoom: 6,
   center: new google.maps.LatLng(39.809860, -98.555183),
   mapTypeId: google.maps.MapTypeId.ROADMAP
-
 });
-
 var infowindow = new google.maps.InfoWindow();
 var marker;
 for (var i = 0; i < locations.length; i++) {  
+    function loadComments(){
+        console.log(locations[i].Comments);
+    }
   marker = new google.maps.Marker({
     draggable: true,
     position: new google.maps.LatLng(locations[i].Lat, locations[i].Long),
     map: map, 
-
   });
   google.maps.event.addListener(marker, 'click', (function(marker, i) {
     return function() {
       infowindow.open(map, marker);
       //
-
-
       infowindow.setContent('<div contentEditable="true" ' +
                                    'style="height: 100px; color: black;">' +
-                                   'Title: '+ locations[i].Title +'<br>' + 'Description:' + locations[i].Desc +'</div>');
-                                   console.log(locations[i].Title)
+                                   'Title: '+ locations[i].Title +'<br>'  +
+                                    'Description: ' + locations[i].Desc + '<br>' +
+                                    'Date: ' + locations[i].Date + '<br>' + 
+                                    'Duration: ' + locations[i].Duration + '<br>' + 
+                                    "<button type='button' class='btn btn-info' data-toggle='collapse' data-target='#demo' onclick='showComments({ " + 'Time:' + locations[i].Time + ',' + 'Uid:' + ' "' + locations[i].Uid + '" ' + ","  +     "})'>"   + "Show comments </button>" + "<br>" +
+                 
+                                      '</div>');
       
     }
   })(marker, i), function() {
@@ -221,87 +109,61 @@ for (var i = 0; i < locations.length; i++) {
 }//console.log(marker);  
       }
 
-      function ping(){
-    ref.once('value',ping1, errData);
-}
 
-var refping;
-function ping1(data){
-    //gets current user; also good stuff
-    var user = firebase.auth().currentUser;
-    console.log(user);
-    var email = user.email;
-    var specificKey;
 
-   var users = data.val();
-    var keys = Object.keys(users);
-
-   for (var i = 0; i < keys.length; i++){
-            var k = keys[i];
-            if( email == users[k].email){
-                specificKey = k;
-                }
-            }
-
-    var refping = firebase.database().ref('users/' + specificKey + '/ping');
-   var ping = {
-        description: 'sample text',
-        duration: 'sample time',
-    }
-    // refping.push(ping);
-
-}
 
 
 function addMarker(){
     ref.once('value', addMarker1, errData);
 }
-
 function addMarker1(data){
-
   var user = firebase.auth().currentUser;
     // console.log(user);
-    var email = user.email;
+    var userid = user.uid;
+    // console.log('www', userid)
     var specificKey;
-
    var users = data.val();
     var keys = Object.keys(users);
-
    for (var i = 0; i < keys.length; i++){
             var k = keys[i];
-            if( email == users[k].email){
+            if( userid == users[k].uid){
                 specificKey = k;
                 }
             }
-
     var refping = firebase.database().ref('users/' + specificKey + '/ping');
-
-
-
-locations.push({Title: $('#title').val(), Lat: Math.random() * 10 + 30, Long: Math.random() * 10 - 100,Desc: $("#desc").val()});
-
-refping.push(
-    {Title: locations[increment].Title,
-         Lat: locations[increment].Lat,
-          Long: locations[increment].Long,
-           Desc: locations[increment].Desc} );
-
-
+locations.push({
+    Uid: userid,
+    Title: $('#title').val(), 
+    Lat: Math.random() * 10 + 30, 
+    Long: Math.random() * 10 - 100,
+    Desc: $("#desc").val(),
+     Date: today,
+    Name: user.displayName,
+    Duration: $('#dur').val(),
+    Comments: {First: 'Beat you to it'},
+    Time: time.getTime(),
+});
+refping.push({
+    Uid: locations[increment].Uid,
+    Title: locations[increment].Title,
+     Lat: locations[increment].Lat, 
+     Long: locations[increment].Long,
+      Desc: locations[increment].Desc,
+    Date: locations[increment].Date,
+    Name: locations[increment].Name,
+    Duration: locations[increment].Duration,
+    Comments: locations[increment].Comments ,
+    Time: locations[increment].Time,
+} );
 initMap();
 increment++;
-console.log(locations)
-
+// console.log(locations)
 }
-
-
-
-
 //adds new users
 function newUser(){
 ref.on('value', gotData, errData);
 }
 //good stuff; this adds new users
-
 function gotData(data){
     
     //gets current user; also good stuff
@@ -347,21 +209,17 @@ function gotData(data){
         // // looks through database for user, if uid is found push into database as a new user, otherwise do nothing
     }
 }
-
 //Golbal locations
 var glocations = [];
 function getglobalData(){
-database.on("child_added", function(rowData){
-    
+database.once("child_added", function(rowData){
+    glocations = [];
    var users = rowData.val();
     var keys = Object.keys(users);
-    console.log(keys)
     var prevalues = [];
     for (k = 0; k < keys.length; k++){
         prevalues.push(users[keys[k]].ping)
     }
-    console.log('pre',prevalues);
-
     for (p = 0; p < prevalues.length; p++){
         // console.log('inbtw', prevalues[p]);
         if (prevalues[p] == undefined){}
@@ -372,16 +230,90 @@ database.on("child_added", function(rowData){
         }
         }
     }
-    console.log('global locations',glocations);
+    // console.log('global locations',glocations);
 });
 }
-
 //adds all pings to Map
 function globalUpdate(){
-    ref.on('value', global, errData)
+    ref.once('value', global, errData)
 }
 var glocations = []
+function addComment(ping){
+    var pinglist;
+    var refcomment;
+    // console.log('hit i', ping.User)
+    //established connectsion bewteen firebase and ping
+    ref.once("value", function(rowData){
+        var keys = Object.keys(rowData.val())
+        
+        // console.log(rowData.val())
+        for (k = 0; k < keys.length; k++){
+            // console.log(rowData.val()[keys[k]].uid)
+            // console.log(rowData.val()[keys[k]].uid);
+            // console.log(ping.Uid);
+            
+            if (rowData.val()[keys[k]].uid == ping.Uid){
+                pinglist = Object.keys(rowData.val()[keys[k]].ping);
+                console.log(pinglist.length, 'd')
+                // console.log('work');
+                for (pl = 0; pl < pinglist.length; pl++){
+                    refcomment = firebase.database().ref('users/' + keys[k] + '/ping/' + pinglist[pl] + '/Comments');
+                    // console.log('pop')
+                    if (rowData.val()[keys[k]].ping[pinglist[pl]].Time == ping.Time ){
+                        
+                            var name = ping.User;
+                            var comment = ping.message;
+                            refcomment.push(
+                                {
+                                    name: name,
+                                    message: comment,
+                                }
+                            )
+                            break
+                        
+                    }
+                    
+                }
+                break
+            }
+        }
+    },
+    
+    )
+}
+function showComments(ping){
+    var pinglist;
+    var refcomment;
+    //established connectsion bewteen firebase and ping
+    ref.once("value", function(rowData){
+        var keys = Object.keys(rowData.val())
+        // console.log(rowData.val())
+        for (k = 0; k < keys.length; k++){
+            // console.log(rowData.val()[keys[k]].uid)
+            if (rowData.val()[keys[k]].uid == ping.Uid){
+                pinglist = Object.keys(rowData.val()[keys[k]].ping);
+                // console.log('work')
+                for (pl = 0; pl < pinglist.length; pl++){
+                    if (rowData.val()[keys[k]].ping[pinglist[pl]].Time == ping.Time ){
+                        //loop through comments and prints all comments
+                        var comments = Object.keys(rowData.val()[keys[k]].ping[pinglist[pl]].Comments)
+                        for (c = 0; c < comments.length; c++){
+                            if (c!= comments.length-1){
+                                console.log(rowData.val()[keys[k]].ping[pinglist[pl]].Comments[comments[c]]);
+                            }
+                        }
+                        break
+                    }
+                }
+                break
+            }
+        }
+    },
+    
+    )
+}
 function global(data) {
+    var user = firebase.auth().currentUser;
     var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 6,
     center: new google.maps.LatLng(39.809860, -98.555183),
@@ -391,19 +323,28 @@ function global(data) {
     var marker;
     for (var i = 0; i < glocations.length; i++) {  
         marker = new google.maps.Marker({
-        draggable: false,
+        draggable: true,
         position: new google.maps.LatLng(glocations[i].Lat, glocations[i].Long),
         map: map, 
     });
     google.maps.event.addListener(marker, 'click', (function(marker, i) {
         return function() {
         infowindow.open(map, marker);
-        infowindow.setContent('<div contentEditable="true" ' +
-                                    'style="height: 100px; color: red;">' +
-                                    'Title:' + glocations[i].Title+'<br>' + 'Description:' +glocations[i].Desc +'</div>');
-                console.log(glocations[i].Title);
-
-        }
+        // console.log(user.displayName)
+     infowindow.setContent('<div contentEditable="true" ' +
+                                   'style="height: 100px; color: black;">' +
+                                   'Title: '+ glocations[i].Title +'<br>'  +
+                                    'Description: ' + glocations[i].Desc + '<br>' +
+                                    'Date: ' + glocations[i].Date + '<br>' + 
+                                    'Duration: ' + glocations[i].Duration + '<br>' + 
+                                     'posted by ' + glocations[i].Name     + '<br>' +
+                                    "<button onclick='showComments({ " + 'Time:' + glocations[i].Time + ',' + 'Uid:' + ' "' + glocations[i].Uid + '" ' + ","  +     "})'>"   + "Show comments </button>" + "<br>" +
+                                    // "<button onclick="  + + "add comment </button>" + "<br>" +
+                                    "<button type='button' onclick= 'addComment({ " + 'Time:' + glocations[i].Time + ',' + 'Uid:' + ' "' + glocations[i].Uid + '" ' + ","  + 'User:' + ' "' +user.displayName + '" ' + ',' + 'message:' + '5' +     "})'>"   + "Add comment </button>" + "<br>" +
+                                     
+                                      '</div>');
+      
+    }
     })(marker, i), function() {
             marker.openInfoWindowHtml();
         });
@@ -411,41 +352,92 @@ function global(data) {
     }//console.log(marker);  
 }
 
+// type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo"
+
+
+
 function addglobalMarker(){
     ref.once('value', addglobalMarker1, errData);
 }
-
 function addglobalMarker1(data){
-
   var user = firebase.auth().currentUser;
-    // console.log(user);
     var email = user.email;
     var specificKey;
-
    var users = data.val();
     var keys = Object.keys(users);
-
    for (var i = 0; i < keys.length; i++){
             var k = keys[i];
             if( email == users[k].email){
                 specificKey = k;
                 }
             }
-
     var refping = firebase.database().ref('users/' + specificKey + '/ping');
-
-
-
-
-
-
 addMarker();
-
 getglobalData();
 globalUpdate();
-increment++;
-
 }
 
-
-
+//sign in/out
+//called when successful user log in
+function onSignIn(googleUser) {
+    console.log('User signed in!');
+    var profile = googleUser.getBasicProfile();
+    //change userName text, img source, & email text based on profile
+    $(".userName").text(profile.getName());
+    $("img").attr("src", profile.getImageUrl());
+    $(".email").text(profile.getEmail());
+   window.location.href = "position.html";
+    googleSignin();
+}
+function onSignIn2(googleUser) {
+    console.log('User signed in!');
+    var profile = googleUser.getBasicProfile();
+    //change userName text, img source, & email text based on profile
+    $(".userName").text(profile.getName());
+    $("img").attr("src", profile.getImageUrl());
+    $(".email").text(profile.getEmail());
+    googleSignin();
+    initMap()
+}
+//authenticates users?
+var provider = new firebase.auth.GoogleAuthProvider();
+function googleSignin() {
+   firebase.auth()
+  
+   .signInWithPopup(provider).then(function(result) {
+      var token = result.credential.accessToken;
+      var user = result.user;
+      var email = result.user.email;
+  }).catch(function(error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(error.code)
+      console.log(error.message)
+   });
+  
+}
+function googleSignout() {
+   firebase.auth().signOut()
+   .then(function() {
+      console.log('Signout Succesfull')
+   }, function(error) {
+      console.log('Signout Failed')  
+  });
+} 
+//called when "sign out" button clicked
+function onSignOut() {
+    console.log(gapi.auth2);
+    gapi.auth2.init();
+    //should sign user out and toggleHidden
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+        console.log('User signed out.')
+        //setting back to default
+        $(".userName").text("USER_NAME");
+        $("img").attr("src", "assets/placeholder.png");
+        $(".email").text("example@example.com");
+        window.location.href = "index.html";
+    });
+    googleSignout();
+}
+//sing in/out

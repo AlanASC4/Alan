@@ -68,7 +68,7 @@
     </div>
 
 
-      <!--<button type="button" class="btn btn-danger" onclick="addMarker()">Add Marker!</button>-->
+      <button type="button" class="btn btn-danger" onclick="addMarker()">Add Marker!</button>
     
       <div class="jumbotron">
         <button id="filterTag" class="btn btn-warning btn-sm" onclick="showFilter('popUpFilter')">Pop Up</button>
@@ -97,9 +97,13 @@
                     <input id="desc" type="text" class="form-control" placeholder="Ping Description">
                     <span class="input-group-btn">
 
+                    <div class="input-group input-group-md">
+                    <span class="input-group-addon">Duration:</span>
+                    <input id="dur" type="text" class="form-control" placeholder="Ping Description">
+                    <span class="input-group-btn">
                     </div><br>
                     <button class="btn btn-danger" onclick="showFilter('popUpFilter')">Cancel</button>
-                    <button class="btn btn-danger" onclick="addMarker()">Submit</button>
+                    <button class="btn btn-danger" onclick="addMarker(), showFilter('popUpFilter')">Submit</button>
                     <button class="btn btn-danger" onclick="addglobalMarker()">Submit to Global</button>
 
                     </div>
@@ -110,7 +114,10 @@
                </div>
   </div>
   </div> 
-   <div id="feed" class="well col-md-4">
+   
+
+  </div>
+  <div id="feed" class="well col-md-4">
 <h1>Feed Box</h1>
 
         <button onclick="displayInfo()">Master</button>
@@ -119,9 +126,8 @@
         <button onclick="pop()">Userkey</button>
 
    </div>
-
-  </div>
   
+</div>
 </div>
   
     <script async defer

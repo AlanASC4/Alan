@@ -44,6 +44,7 @@ function pop(){
     console.log(refuser)
 }
 function displayInfo(){
+    $(".container").empty();
     findName();
     findPing();
 }
@@ -69,6 +70,7 @@ function findName2(data){
                 }
             }
     var userData = users[specificKey];
+    
     $(".container").append("<p>" + userData.name  +"</p>")
 }
 //finds recent pings and displays it 
