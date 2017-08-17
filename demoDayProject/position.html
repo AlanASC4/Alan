@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
-  <head><meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <head>
+      <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
    <script src="https://use.fontawesome.com/ef351e18db.js"></script>
-
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWuTYHWjbohOSfRZGuOBAzyU7Jj3PG_80&callback=getglobalData&callback=globalUpdate">
+    </script>
 <script>
   // Initialize Firebase
   var config = {
@@ -18,25 +20,21 @@
   };
   firebase.initializeApp(config);
 </script>
-
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
 <script
   src="http://code.jquery.com/jquery-3.2.1.js"
   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
-  crossorigin="anonymous"></script>
+  crossorigin="anonymous">
+</script>
     
       
         <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="input.css">
-
 <script src="https://apis.google.com/js/platform.js" async defer></script>
         <!--Reference Client ID in meta tag here-->
     <meta name="google-signin-client_id" content="657696259663-reptkndga3chnnd8hnrmcapb6ba6f64u.apps.googleusercontent.com">
-
 <script>
     function signOut() {
       var auth2 = gapi.auth2.getAuthInstance();
@@ -51,62 +49,76 @@
       });
     }
   </script>
-
   <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
  <script src="script.js"></script>
  <script src="feed.js"></script>
- <script src="input.js"></script>
-         <script src="https://use.fontawesome.com/ef351e18db.js"></script>
-
+ <script src="https://use.fontawesome.com/ef351e18db.js"></script>
+ 
  <!--<script src="app.js"></script>-->
   </head>
-  <body onload="getglobalData()"> 
+  <body onload="getglobalData(), globalUpdate()"> 
+<!-- As a heading -->
+<nav class="topHeaderBar navbar-light">
+  <span class="h1" id="headTitle" class="navbar-brand mb-0">GrouPing</span>
+    <span class="userProfile">
+      <a class="userName" href="#" onclick="toggleProfilePage()">John Smith</a>
+      <img class="userPic"></img>
+    </span>
+</nav>
+           
+                 
+  
+    <div class="container-fluid">
+      <div class="mainContent row">
+        <div class="mapContainer col-md-8 col-sm-12">
+          <div id="map"></div>
+           <button id="filterTag" class="circleButton btn-warning btn-sm" onclick="getLocation(), showFilter('popUpFilter')"><i class="plusOnPingButton fa fa-plus fa-2x" aria-hidden="true"></i></button>
+          <button type = "button" class="circleButton btn-warning btn-sm" onclick="getglobalData(), globalUpdate()"><i class="refreashOnPingButton fa fa-refresh fa-2x" aria-hidden="true"></i></button>
+        </div>
+        <div class="feedContainer col-md-4 col-sm-12" style="text-align: center;">
+          <h4 class="recentPingTitle">Recent Pings</h4>
+          <div id="feed" class= "realFeed"></div>
+        </div>
+      
+    </div>
+    </div>
     
     <div class="container-fluid">
   <div class="row">
   <div id="mapBox" class="col-md-8">
     <div class="signs">
-        <div class="g-signin2" data-onsuccess="onSignIn2"></div>
-        <button href="#" class="btn btn-success" onclick="onSignOut();">Sign out</button>
-        <button type = "button" onclick="newUser()">If you're new add yourself</button>
+        <div class="g-signin2" data-onsuccess="onSignIn2" hidden></div>
+        <button type = "button" onclick="newUser()">Become a Pinger!</button>
     </div>
+      
 
-    
-    
-     <!--<button type="button" class="btn btn-danger" onclick="addMarker()">Add Marker!</button>
-    -->
-     <div class="jumbotron">
-        <button id="filterTag" class="btn btn-warning btn-sm" onclick="getLocation(), showFilter('popUpFilter')">Add Ping!</button>
-        
-       <p id="response"></p>
+        <div id="userProfilePop" class="userPopUpPosition" >
+        <div id="userPopUpWrapper">
+          <div id="userProfileBox">
+                <button id="closePopUp" type="button" class="close" aria-label="Close" onclick="toggleProfilePage();">
+              <span aria-hidden="true">&times;</span>
+              </button>
+            <img class="userPic" id="profilePicBig"></img>
+            <h4 class="userName" ></h4>
+            <p>Pok pok mlkshk chia pork belly hoodie. Organic selfies viral meggings dreamcatcher hexagon irony. Copper mug try-hard you probably haven't heard of them fixie XOXO. Yuccie cliche asymmetrical, taxidermy four dollar toast pok pok wayfarers church-key pitchfork health goth DIY copper mug. Tilde pop-up PBR&B synth. Master cleanse palo santo normcore, hexagon farm-to-table vinyl iPhone art party tofu cloud bread gentrify banh mi forage.</p>
+          <button href="#" class="signOutBttn btn btn-success" onclick="onSignOut();">Sign out</button>
+          </div>
+        </div>
+      </div>
 
-       
- 
-  <button type = "button" class="btn btn-warning btn-sm" onclick="getglobalData(), globalUpdate()">Global Pings!</button>
-        <!--<button class="btn btn-warning btn-sm" onclick="addglobalMarker()">Add marker to global </button>-->
-        
-       <h3>My Google Maps Demo</h3>
-        <div id="map"></div>
-        <div id="popUpFilter" class="popUpPosition" hidden>
+        <div id="popUpFilter" class="popUpPosition">
             <div id="popUpWrapper">
                 <div id="popUpContainer">
-                    
-                    <!--<button onclick="geocodeLatLng()">Geocode</button>-->
-                    <i id="closePopUp" class="fa fa-window-close" aria-hidden="true" onclick="showFilter('popUpFilter'), clearTags();"></i>
-                    <div class="input-group input-group-md">
-                    <p>Title: <input class="inputBox form-control" id="title" type="text" placeholder="Ping Title"></input></p>
-                    <span class="input-group-btn">
-                    </div><br>
-
-                   <div class="input-group input-group-md">
-                    <p>Description: <br><textarea class="descriptionField form-control" type="text" id="desc" rows="3" placeholder="Ping Description"></textarea></p>      
-                    <span class="input-group-btn">
-
-                   </div><br>
-                    
-                   <div class="input-group input-group-md">
-                     <p>Duration:         
-                        <select id="dur" class = "form-control" type="text" size="1" placeholder="Ping Duration" multiple class="inputBox">
+                    <button id="closePopUp" type="button" class="close" aria-label="Close" onclick="showFilter();">
+                    <span aria-hidden="true">&times;</span>
+                    </button>    
+                    <h4 style="color: rgb(75, 55, 106);">Post a new Ping!</h4>
+                    <input class="miniInput" id="Long" hidden></input> <input class="miniInput" id="Lat" hidden></input> <input class="miniInput" id="LatLng" hidden></input>
+                      
+                       
+                    <p>Title: <input class="inputBox" id="title"></input></p>     
+                    <p>Duration:         
+                        <select id="dur" size="1" multiple class="inputBox">
                             <option>1 hours</option>
                             <option>4 hours</option>
                             <option>8 hours</option>
@@ -114,74 +126,27 @@
                             <option>36 hours</option>
                             <option>48 hours</option>
                         </select>
-                    </p>                    
-                    <span class="input-group-btn">
-                    </div><br>
-
-                   <div class = "Coordinates" style="display: none">
-                   <div class="input-group input-group-md">
-                    <span class="input-group-addon">Lat:</span>
-                    <input id="Lat" type="text" class="form-control" placeholder="Ping Latitude">
-                    <span class="input-group-btn">
-                    </div><br>
-
-                  <div class="input-group input-group-md">
-                    <span class="input-group-addon">Long:</span>
-                    <input id="Long" type="text" class="form-control" placeholder="Ping Longitude">
-                    <span class="input-group-btn">
-                    </div><br>
-
-                   <div class="input-group input-group-md">
-                    <span class="input-group-addon">Latlng:</span>
-                    <input id="Latlng" type="text" class="form-control" placeholder="Ping Coordinates">
-                    <span class="input-group-btn">
-                    </div><br>
-                    </div>
-                    
-                   <div class="input-group input-group-md">
-                    <button style="color:black"onclick="geocodeLatLng()"> Address:</button>
-                    <input id="Address" type="text" class="form-control" placeholder="Ping Adress">
-                    <span class="input-group-btn">
-                    </div><br>
-                   
-                   <div class="input-group input-group-md">
-                      <p>Tags: <input class="inputBox form-control" id="Tags"></input></p>
+                    </p>
+                    <p>Description: <br><textarea class="descriptionField form-control" id="desc" rows="3"></textarea></p> 
+                    <p>Address: <input class="inputBox" id="Address"></input><button class="geo btn btn-sm" onclick="geocodeLatLng()">GeoLocate</button></p>     
+                    <p>Tags: <input class="inputBox" id="newTag"></input></p>
                     <div class="tagChoiceField"></div>
-                    <center> <button id="submitButton" type="button" onclick="addTagsToPing(), addglobalMarker(), showFilter(), clearTags();" class="btn btn-primary btn-sm">Ping!</button> </center>
-                    <span class="input-group-btn">
-                    </div><br>
-                    
-
-                    
-                    
-                    
-                   <!--<div class="tagChoiceField"></div>-->
+                    <center> <button id="submitButton" type="button" onclick="addMarker(), addTagsToPing(), showFilter(), clearTags();" class="btn btn-primary btn-sm">Ping!</button> </center>
                 </div>
-               </div>
-  </div>
-  </div>
+            </div>
+        </div> 
   
-
  </div>
-  <div id="feed" class="well col-md-4">
-<h1>Feed Box</h1>
-
-       <button onclick="displayInfo()">Master</button>
-        <button onclick="findName()">What's your name?</button>
-        <button onclick="findPing()">What have you pinged</button>
-        <button onclick="pop()">Userkey</button>
-
-  </div>
   
 </div>
 </div>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWuTYHWjbohOSfRZGuOBAzyU7Jj3PG_80&callback=getglobalData&callback=globalUpdate">
-    </script>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+  <input id="zoom" type="text" class="form-control" placeholder="Ping Description" value=0>
+    <input id="centerlat" type="text" class="form-control" placeholder="Ping Description">
+    <input id="centerlon" type="text" class="form-control" placeholder="Ping Description">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
     <script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'></script>
-    <script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
   </body>
 </html>
