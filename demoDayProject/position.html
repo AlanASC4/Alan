@@ -55,7 +55,9 @@
   <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
  <script src="script.js"></script>
  <script src="feed.js"></script>
- 
+ <script src="input.js"></script>
+         <script src="https://use.fontawesome.com/ef351e18db.js"></script>
+
  <!--<script src="app.js"></script>-->
   </head>
   <body onload="getglobalData()"> 
@@ -103,10 +105,19 @@
                    </div><br>
                     
                    <div class="input-group input-group-md">
-                    <span class="input-group-addon">Duration:</span>
-                    <input id="dur" type="text" class="form-control" placeholder="Ping Duration">
+                     <p>Duration:         
+                        <select id="dur" class = "form-control" type="text" size="1" placeholder="Ping Duration" multiple class="inputBox">
+                            <option>1 hours</option>
+                            <option>4 hours</option>
+                            <option>8 hours</option>
+                            <option>24 hours</option>
+                            <option>36 hours</option>
+                            <option>48 hours</option>
+                        </select>
+                    </p>                    
                     <span class="input-group-btn">
                     </div><br>
+
                    <div class = "Coordinates" style="display: none">
                    <div class="input-group input-group-md">
                     <span class="input-group-addon">Lat:</span>
@@ -133,12 +144,16 @@
                     <span class="input-group-btn">
                     </div><br>
                    
+                   <div class="input-group input-group-md">
+                      <p>Tags: <input class="inputBox form-control" id="Tags"></input></p>
+                    <div class="tagChoiceField"></div>
+                    <center> <button id="submitButton" type="button" onclick="addTagsToPing(), addglobalMarker(), showFilter(), clearTags();" class="btn btn-primary btn-sm">Ping!</button> </center>
+                    <span class="input-group-btn">
+                    </div><br>
                     
 
-                    <button class="btn btn-danger" onclick="clearInput(),showFilter('popUpFilter')">Cancel</button>
-                    <!--<button class="btn btn-danger" onclick="addMarker(), showFilter('popUpFilter')">Submit</button>-->
-                    <button class="btn btn-danger" onclick="addglobalMarker(), showFilter('popUpFilter')">Ping!</button>
-                    <!--<input id="newTag"></input>-->
+                    
+                    
                     
                    <!--<div class="tagChoiceField"></div>-->
                 </div>
@@ -163,7 +178,9 @@
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWuTYHWjbohOSfRZGuOBAzyU7Jj3PG_80&callback=getglobalData&callback=globalUpdate">
     </script>
-
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
     <script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'></script>
     <script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
   </body>

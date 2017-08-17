@@ -33,30 +33,7 @@ function errData(err){
 
 
 
-function searchPing() {
-    var userSearch = document.getElementById("searchPing").value;
-    var tag = document.getElementById("tagFilter").value;
-    document.getElementById("response").innerHTML = "You searched for " + userSearch + " in " + tag;
-}
 
-var num = 0; // To test if is program first tiem running
-var tagArray = ["guitar", "games", "beach", "xbox", "party", "football", "groupwork", "restaurant", "fundraiser", "soupkitchen", "newhouse", "comicbooks", "boardgame", "yoga", "cook"];
-function addTag(id) {
-    var newTag = document.getElementById(id).value;
-    for (var i = 0; i < tagArray.length; i++) {
-        if (newTag.toUpperCase() == tagArray[i].toUpperCase()) {
-            return;
-        }
-        
-    }
-    tagArray.push(newTag);
-}
-function updateTagField() {
-    for (var i = 0; i < tagArray.length; i++) {
-        $(".tagChoiceField").append('<label class="tags btn btn-secondary">'
-    + '<input type="checkbox" onclick="addTagsToCollection(' + i + ');" autocomplete="off" id="tag' + i + '">' + tagArray[i] + '</label>');
-    }
-}
 function showFilter() {
     var e = document.getElementById('popUpFilter');
     if (e.style.display == 'block') {
@@ -68,52 +45,6 @@ function showFilter() {
         console.log("I am here");
     }
 }
-var pingTags;
-var temp = [];
-function addTagsToCollection(num) {
-    temp.push(tagArray[num]);
-}
-function addTagsToPing() {
-    pingTags = temp;
-    temp = [];
-    for (var i = 0; i < pingTags.length; i++) {
-        $(".addedToPing").append(pingTags[i]);
-        console.log(pingTags[i]);
-    }
-    pingTags = [];
-}
-// clear tags in pop up window when submit or x button is clicked
-function clearTags() {
-    $(".tagChoiceField").empty();
-}
-function contains(text1, text2) {
-    if (text1.indexOf(text2) != -1) {
-        return true;
-    } else return false;
-}
-$(function() { 
-    $("#newTag").keyup(function() {
-        console.log("key is up");
-        var searchText = $("#newTag").val().toUpperCase();
-        if (searchText == "") {
-            $(".tagChoiceField .tags").each(function() {
-                $(this).show();
-            });
-        }
-        $(".tagChoiceField .tags").each(function() {
-                if (contains($(this).text().toUpperCase(), searchText)) {
-                    console.log($(this).text());
-                    $(this).show();
-    
-                } 
-                else {
-                    $(this).hide();
-                    console.log($(this).text());
-                }
-        });
-    });
-});
-
 
 var locations = [];
 var increment = 0;
@@ -272,9 +203,10 @@ locations.push({
     Lat: $('#Lat').val(), 
     Long: $('#Long').val(),
     Desc: $("#desc").val(),
-     Date: today,
+    Date: today,
     Name: user.displayName,
     Duration: $('#dur').val(),
+    Tags: $('#Tags').val(),
     Comments: {First: 'Beat you to it'},
     Time: time.getTime(),
     Address: String($('#Address').val())
@@ -478,8 +410,8 @@ function showComments(ping){
 function global(data) {
     var user = firebase.auth().currentUser;
     var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 12,
-    center: new google.maps.LatLng(40.730610, -73.935242),
+    zoom: 15,
+    center: new google.maps.LatLng(40.71401, -74.014713),
     mapTypeId: google.maps.MapTypeId.ROADMAP
 });
     var geocoder = new google.maps.Geocoder;
