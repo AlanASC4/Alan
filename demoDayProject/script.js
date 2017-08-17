@@ -473,6 +473,87 @@ function showComments(ping){
     )
 }
 
+function showComments(ping){
+    $('#demo').toggle()
+    $('#demo').empty()
+    var pinglist;
+    var refcomment;
+    //established connectsion bewteen firebase and ping
+    ref.once("value", function(rowData){
+        var keys = Object.keys(rowData.val())
+        // console.log(rowData.val())
+        for (k = 0; k < keys.length; k++){
+            // console.log(rowData.val()[keys[k]].uid)
+            if (rowData.val()[keys[k]].uid == ping.Uid){
+                pinglist = Object.keys(rowData.val()[keys[k]].ping);
+                // console.log('work')
+                for (pl = 0; pl < pinglist.length; pl++){
+                    if (rowData.val()[keys[k]].ping[pinglist[pl]].Time == ping.Time ){
+                        //loop through comments and prints all comments
+                        var comments = Object.keys(rowData.val()[keys[k]].ping[pinglist[pl]].Comments)
+                        for (c = 0; c < comments.length; c++){
+                            if (c!= comments.length-1){
+                                console.log(rowData.val()[keys[k]].ping[pinglist[pl]].Comments[comments[c]]);
+                                $('#demo').append('<h9>' + rowData.val()[keys[k]].ping[pinglist[pl]].Comments[comments[c]].name +
+                                 ":" + rowData.val()[keys[k]].ping[pinglist[pl]].Comments[comments[c]].message + '</h9><br>')
+                            }
+                        }
+                        break
+                    }
+                }
+                break
+            }
+        }
+    },
+    
+    )
+}
+
+function addComment(ping){
+    var pinglist;
+    var refcomment;
+    // console.log('hit i', ping.User)
+    //established connectsion bewteen firebase and ping
+    ref.once("value", function(rowData){
+        var keys = Object.keys(rowData.val())
+        
+        // console.log(rowData.val())
+        for (k = 0; k < keys.length; k++){
+            // console.log(rowData.val()[keys[k]].uid)
+            // console.log(rowData.val()[keys[k]].uid);
+            // console.log(ping.Uid);
+            
+            if (rowData.val()[keys[k]].uid == ping.Uid){
+                pinglist = Object.keys(rowData.val()[keys[k]].ping);
+                // console.log(pinglist.length, 'd')
+                // console.log('work');
+                for (pl = 0; pl < pinglist.length; pl++){
+                    refcomment = firebase.database().ref('users/' + keys[k] + '/ping/' + pinglist[pl] + '/Comments');
+                    // console.log('pop')
+                    if (rowData.val()[keys[k]].ping[pinglist[pl]].Time == ping.Time ){
+                        
+                            var name = ping.User;
+                            var comment = String($('#comment').val());
+                            
+                            refcomment.push(
+                                {
+                                    name: name,
+                                    message: comment,
+                                }
+                            )
+                            break
+                        
+                    }
+                    
+                }
+                break
+            }
+        }
+    },
+    
+    )
+}
+
 
 function global(data) {
 
@@ -512,31 +593,24 @@ function global(data) {
         return function() {
         infowindow.open(map, marker);
         console.log(user.displayName)
-     infowindow.setContent('<div contentEditable="true" ' +
-                                   'style="height: 100px; color: black;">' +
+      infowindow.setContent('<div contentEditable="true" ' +
+                                   'style="height: 150px; color: black;">' +
                                    'Title: '+ glocations[i].Title +'<br>'  +
                                     'Description: ' + glocations[i].Desc + '<br>' +
                                     'Date: ' + glocations[i].Date + '<br>' + 
                                     'Duration: ' + glocations[i].Duration + '<br>' + 
-
                                     'Address: ' + glocations[i].Address + '<br>' +
-
                                      'posted by ' + glocations[i].Name     + '<br>' +
-                                     
-                                    "<button onclick='showComments({ " + 'Time:' + glocations[i].Time + ',' + 'Uid:' + ' "' + glocations[i].Uid + '" ' + ","  +     "})'>"   + "Show comments </button>" + "<br>" +
+                                    '<input id="comment" type="text" class="form-control" placeholder="Write Comment here">' +
+                                       
+                                    "<button id = 'infoz' type='button'  class='btn btn-info'  onclick='showComments({ " + 'Time:' + glocations[i].Time + ',' + 'Uid:' + ' "' + glocations[i].Uid + '" ' + ","  +     "})'>"   + "Show comments </button>" + "<br>" +
                                     
-                                    "<button type='button' class='btn btn-info' data-toggle='collapse' data-target='#demo' onclick= 'addComment({ " + 'Time:' + glocations[i].Time + ',' + 'Uid:' + ' "' + glocations[i].Uid + '" ' + ","  + 'User:' + ' "' +user.displayName + '" ' + ',' + 'message:' + '5' +     "})'>"   + "Add comment </button>" + "<br>" +
+                                    "<button type='button' class='btn btn-info' onclick= 'addComment({ " + 'Time:' + glocations[i].Time + ',' + 'Uid:' + ' "' + glocations[i].Uid + '" ' + ","  + 'User:' + ' "' +user.displayName + '" ' + ',' + 'message:' + '5' +     "})'>"   + "Add comment </button>" + "<br>" +
                                      
-                                     "<div class='collapse' id='demo'>"   +
-
-
-                                     "</div>"   +
-
-                                      '</div>');
+                                     "<div id='demo'> </div>"   +
+                            '</div>');
       
     }
-
-
 
 
 
