@@ -31,6 +31,8 @@
       
         <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="input.css">
+
 <script src="https://apis.google.com/js/platform.js" async defer></script>
         <!--Reference Client ID in meta tag here-->
     <meta name="google-signin-client_id" content="657696259663-reptkndga3chnnd8hnrmcapb6ba6f64u.apps.googleusercontent.com">
@@ -72,13 +74,13 @@
      <!--<button type="button" class="btn btn-danger" onclick="addMarker()">Add Marker!</button>
     -->
      <div class="jumbotron">
-        <button id="filterTag" class="btn btn-warning btn-sm" onclick="getLocation(),geocodeLatLng(), showFilter('popUpFilter')">Add Ping!</button>
+        <button id="filterTag" class="btn btn-warning btn-sm" onclick="getLocation(), showFilter('popUpFilter')">Add Ping!</button>
         
        <p id="response"></p>
 
        
  
-  <button type = "button" class="btn btn-warning btn-sm" onclick="getglobalData(), globalUpdate()">Check what Others are Pinging!</button>
+  <button type = "button" class="btn btn-warning btn-sm" onclick="getglobalData(), globalUpdate()">Global Pings!</button>
         <!--<button class="btn btn-warning btn-sm" onclick="addglobalMarker()">Add marker to global </button>-->
         
        <h3>My Google Maps Demo</h3>
@@ -87,51 +89,53 @@
             <div id="popUpWrapper">
                 <div id="popUpContainer">
                     
-                    <button onclick="geocodeLatLng()">Geocode</button>
+                    <!--<button onclick="geocodeLatLng()">Geocode</button>-->
                     <i id="closePopUp" class="fa fa-window-close" aria-hidden="true" onclick="showFilter('popUpFilter'), clearTags();"></i>
                     <div class="input-group input-group-md">
-                    <span class="input-group-addon">Enter A Title:</span>
-                    <input id="title" type="text" class="form-control" placeholder="Ping Title">
+                    <p>Title: <input class="inputBox form-control" id="title" type="text" placeholder="Ping Title"></input></p>
                     <span class="input-group-btn">
                     </div><br>
 
                    <div class="input-group input-group-md">
-                    <span class="input-group-addon">Enter A Description:</span>
-                    <input id="desc" type="text" class="form-control" placeholder="Ping Description">
+                    <p>Description: <br><textarea class="descriptionField form-control" type="text" id="desc" rows="3" placeholder="Ping Description"></textarea></p>      
                     <span class="input-group-btn">
 
                    </div><br>
-
+                    
                    <div class="input-group input-group-md">
                     <span class="input-group-addon">Duration:</span>
-                    <input id="dur" type="text" class="form-control" placeholder="Ping Description">
+                    <input id="dur" type="text" class="form-control" placeholder="Ping Duration">
+                    <span class="input-group-btn">
+                    </div><br>
+                   <div class = "Coordinates" style="display: none">
+                   <div class="input-group input-group-md">
+                    <span class="input-group-addon">Lat:</span>
+                    <input id="Lat" type="text" class="form-control" placeholder="Ping Latitude">
+                    <span class="input-group-btn">
+                    </div><br>
+
+                  <div class="input-group input-group-md">
+                    <span class="input-group-addon">Long:</span>
+                    <input id="Long" type="text" class="form-control" placeholder="Ping Longitude">
                     <span class="input-group-btn">
                     </div><br>
 
                    <div class="input-group input-group-md">
-                    <span class="input-group-addon">Lat:</span>
-                    <input id="Lat" type="text" class="form-control" placeholder="Ping Description">
-                    <span class="input-group-btn">
-                    </div><br>
-                  <div class="input-group input-group-md">
-                    <span class="input-group-addon">Long:</span>
-                    <input id="Long" type="text" class="form-control" placeholder="Ping Description">
-                    <span class="input-group-btn">
-                    </div><br>
-                   <div class="input-group input-group-md">
                     <span class="input-group-addon">Latlng:</span>
-                    <input id="Latlng" type="text" class="form-control" placeholder="Ping Description">
+                    <input id="Latlng" type="text" class="form-control" placeholder="Ping Coordinates">
                     <span class="input-group-btn">
                     </div><br>
+                    </div>
+                    
                    <div class="input-group input-group-md">
-                    <span class="input-group-addon">Address:</span>
-                    <input id="Address" type="text" class="form-control" placeholder="Ping Description">
+                    <button style="color:black"onclick="geocodeLatLng()"> Address:</button>
+                    <input id="Address" type="text" class="form-control" placeholder="Ping Adress">
                     <span class="input-group-btn">
                     </div><br>
                    
                     
 
-                    <button class="btn btn-danger" onclick="showFilter('popUpFilter')">Cancel</button>
+                    <button class="btn btn-danger" onclick="clearInput(),showFilter('popUpFilter')">Cancel</button>
                     <!--<button class="btn btn-danger" onclick="addMarker(), showFilter('popUpFilter')">Submit</button>-->
                     <button class="btn btn-danger" onclick="addglobalMarker(), showFilter('popUpFilter')">Ping!</button>
                     <!--<input id="newTag"></input>-->

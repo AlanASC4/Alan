@@ -643,3 +643,11 @@ function onSignOut() {
 //           geocodeLatLng(geocoder, map, infowindow);
 //         });
 //sing in/out
+
+
+//clears all info from input window
+//whenever you hit cancel or ping
+
+function clearInput(){
+   
+}
