@@ -475,6 +475,24 @@ function showComments(ping){
 
 
 function global(data) {
+
+    var centerx;
+        var centery;
+        var zo;
+        if ($('#zoom').val() >0){
+            zo = $('#zoom').val();
+            centerx = $('#centerlat').val();
+            centery = $('#centerlon').val();
+        }
+
+    else {
+            centerx = 40.730610;
+            centery = -73.935242;
+            zo = 15;
+        }
+
+
+
     var user = firebase.auth().currentUser;
     var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 15,

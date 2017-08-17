@@ -39,12 +39,15 @@ database.on("child_changed", function(rowData){
     $('#feed').empty();
     console.log('global locations',glocations);
     for (g=golocations.length-1; g>=0; g--){
+        var gcenterlat = golocations[g].Lat;
+        var gcenterlon = golocations[g].Long;
+
         $("#feed").append("<div class = 'jumbotron'><p>Ping Title: "+ golocations[g].Title
         + "<p>Ping Address: " + golocations[g].Address  +"</p><p>Ping Description: "+ golocations[g].Desc
         +"</p><p>Ping Will Last "+ golocations[g].Duration + "<hr></p><p>Name of Pinger: " 
         +golocations[g].Name  +
-        // "</p><button onclick='set(" + gcenterlat  + ","+ gcenterlon  +")'>findme</button>" +
-        // "<button onclick='global()' > zoom </button>" +
+        "</p><button onclick='set(" + gcenterlat  + ","+ gcenterlon  +")'>findme</button>" +
+        "<button onclick='global()' > zoom </button>" +
         
          "<p>"+ golocations[g].Tags +"</p></div>");
         console.log(golocations[g].Lat)
