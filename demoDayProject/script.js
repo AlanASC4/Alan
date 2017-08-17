@@ -217,7 +217,7 @@ function showPosition(position) {
 
 function geocodeLatLng(geocoder, map, infowindow) {
     var geocoder = new google.maps.Geocoder;
-        var input = document.getElementById('Latlng').value;
+        var input = document.getElementById('LatLng').value;
         var latlngStr = input.split(',', 2);
 
         var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};
