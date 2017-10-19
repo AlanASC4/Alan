@@ -580,6 +580,21 @@ function global(data) {
     center: new google.maps.LatLng(40.71401, -74.014713),
     mapTypeId: google.maps.MapTypeId.ROADMAP
 });
+ var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+        var icons = {
+          parking: {
+            icon: iconBase + 'parking_lot_maps.png'
+          },
+          library: {
+            icon: iconBase + 'library_maps.png'
+          },
+          info: {
+            icon: iconBase + 'info-i_maps.png'
+          },
+          myPing: {
+              icon: iconBase + ''
+            }
+        };
     var geocoder = new google.maps.Geocoder;
     var infowindow = new google.maps.InfoWindow();
     var marker;
@@ -750,3 +765,26 @@ function toggleProfilePage() {
     }
 }
 
+function targetdress(){
+    var address= $("#Address").val();
+     var address = address.replace(/\s+/g, '+'); //Replaces spaces with +
+     var cord = {}; 
+     var latitude = "";
+     var longitude = "";
+    var googleurl = "https://maps.googleapis.com/maps/api/geocode/json?address="+address+"&key=AIzaSyCWuTYHWjbohOSfRZGuOBAzyU7Jj3PG_80";
+   $.ajax({
+    url: googleurl,
+    dataType: 'json',
+    success: function(data) {
+        var info = data.results[0];
+         var coordinates = info.geometry.location;   
+         useReturnData(coordinates);     
+        }
+    });
+    function useReturnData(coordinates){
+        cord = coordinates;
+        $('#Lat').val(cord.lat);
+        $('#Long').val(cord.lng);
+        $('#LatLng').val(mylat + "," + mylong )
+    }
+}

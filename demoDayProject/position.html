@@ -113,7 +113,7 @@
                     <span aria-hidden="true">&times;</span>
                     </button>    
                     <h4 style="color: rgb(75, 55, 106);">Post a new Ping!</h4>
-                    <input class="miniInput" id="Long" hidden></input> <input class="miniInput" id="Lat" hidden></input> <input class="miniInput" id="LatLng" hidden></input>
+                    <input class="miniInput" id="Long" ></input> <input class="miniInput" id="Lat" ></input> <input class="miniInput" id="LatLng" ></input>
                       
                        
                     <p>Title: <input class="inputBox" id="title"></input></p>     
@@ -128,7 +128,8 @@
                         </select>
                     </p>
                     <p>Description: <br><textarea class="descriptionField form-control" id="desc" rows="3"></textarea></p> 
-                    <p>Address: <input class="inputBox" id="Address"></input><button class="geo btn btn-sm" onclick="geocodeLatLng()">GeoLocate</button></p>     
+                    <p>Address: <input class="inputBox" id="Address"></input><button class="geo btn btn-sm" onclick="geocodeLatLng()">GeoLocate</button><button class="geo btn btn btn-sm" onclick="targetdress()">Other Adress</button></p>  
+                       
                     <p>Tags: <input class="inputBox" id="newTag"></input></p>
                     <div class="tagChoiceField"></div>
                     <center> <button id="submitButton" type="button" onclick="addMarker(), addTagsToPing(), showFilter(), clearTags();" class="btn btn-primary btn-sm">Ping!</button> </center>
